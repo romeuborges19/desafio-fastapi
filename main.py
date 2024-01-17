@@ -1,7 +1,9 @@
 from typing import Union
 from fastapi import FastAPI 
 from server.router import pokemon_router
-import httpx
+import redis
+
+rd = redis.Redis(host="localhost", port=5432, db=0)
 
 app = FastAPI()
 
