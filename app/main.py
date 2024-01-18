@@ -1,8 +1,8 @@
-from api.v1.pokemon_handler import pokemon_router
+from api.v1.router import router
 from fastapi import FastAPI 
 
 app = FastAPI()
-app.include_router(pokemon_router)
+app.include_router(router)
 
 @app.get('/')
 def read_root():

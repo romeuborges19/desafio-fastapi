@@ -13,7 +13,7 @@ async def get_response(url:str):
         response = await http_client.get(url)
 
         if response.status_code == 200:
-            return response.json()
+            return response
         else: 
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                                 detail="Pokemon not found.") 
@@ -39,6 +39,5 @@ async def get_data_from_api(url:str, key:str):
         raise HTTPException(status_code=status.HTTP_204_NO_CONTENT,
                             detail="No content was returned")
 
-    print(response)
-    cache.set(key, response)
-    return json.loads(response)
+    cache.set(key, response.text)
+    return response.json()

@@ -3,7 +3,7 @@ from pydantic import BaseModel, EmailStr, Field
 from redis_om import JsonModel
 
 class User(JsonModel):
-    username: str = Field(..., max_length=30)
+    username: str 
     email: EmailStr
     hash_password: str
     created_at: datetime = Field(default_factory=datetime.now)
