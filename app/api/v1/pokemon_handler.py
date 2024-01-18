@@ -1,7 +1,5 @@
-from typing import Union
 from fastapi import APIRouter, Request
-from controller.utils import get_request_url
-from service.pokemon_service import PokemonService
+from services.pokemon_service import PokemonService
 
 pokemon_router = APIRouter(
     prefix='/pokemon',

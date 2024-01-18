@@ -1,6 +1,5 @@
-from typing import Union
+from api.v1.pokemon_handler import pokemon_router
 from fastapi import FastAPI 
-from server.router import pokemon_router
 
 app = FastAPI()
 app.include_router(pokemon_router)

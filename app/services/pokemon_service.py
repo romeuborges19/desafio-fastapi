@@ -1,11 +1,5 @@
-from os import stat
-from fastapi import HTTPException, status
-import requests
-from controller.utils import get_data_from_api, get_response
-import json
-
-from service.cache_service import CacheService
-
+from api.utils import get_data_from_api
+from services.cache_service import CacheService
 
 """
 TODO:

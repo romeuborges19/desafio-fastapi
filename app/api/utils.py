@@ -1,8 +1,9 @@
 import json
+
 from fastapi import HTTPException, status
 import httpx
 
-from service.cache_service import CacheService
+from services.cache_service import CacheService
 
 cache = CacheService()
 
@@ -17,25 +18,27 @@ async def get_response(url:str):
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                                 detail="Pokemon not found.") 
 
-def get_request_url(url):
+def get_key(url):
     # Função que gera chave para armazenar pesquisas em cache
-    url = str(url)
-    url = url.replace('http://127.0.0.1:8000', '')
-    return url
+    key = str(url)
+    key = key.replace('http://127.0.0.1:8000', '')
+    return key
 
 async def get_data_from_api(url:str, key:str):
-    # Função que verifica, através do parâmetro 'key', se a pesquisa já foi realizada
+    # Função que obtém os dados da API. Caso a pesquisa 
+    # já tenha sido realizada, ela retornará os dados salvos em cache
+
+    key = get_key(key)
     cache_data = cache.get(key)
     if cache_data:
-        print('cache')
-        return cache_data
+        return json.loads(cache_data)
 
-    print('sem cache')
     response = await get_response(url)
 
     if not response:
         raise HTTPException(status_code=status.HTTP_204_NO_CONTENT,
                             detail="No content was returned")
 
-    cache.set(key, json.dumps(response))
-    return response
+    print(response)
+    cache.set(key, response)
+    return json.loads(response)
