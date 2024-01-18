@@ -1,7 +1,10 @@
 from os import stat
+from fastapi import HTTPException, status
 import requests
-from controller.utils import get_response
+from controller.utils import get_data_from_api, get_response
 import json
+
+from service.cache_service import CacheService
 
 
 """
@@ -16,44 +19,59 @@ TODO:
 7 - Pesquisar por habilidades
 """
 
+cache = CacheService()
+
 class PokemonService:
+    # Service class for Pokemon Data  
+
     @staticmethod
-    async def get_pokemon_by_name(name:str):
+    async def get_pokemon_by_name(name:str, key:str):
         # Obtém dados de um pokemon através do seu nome
         url = f'https://pokeapi.co/api/v2/pokemon/{name}'
-        response = await get_response(url)
+
+        response = await get_data_from_api(url, key)
+
+        return {name: response}
+
+    @staticmethod
+    async def get_pokemon_encounters(name:str, key:str):
+        # Obtém dados sobre os locais onde é possível encontrar um pokémon
+        url = f'https://pokeapi.co/api/v2/pokemon/{name}/encounters'
+
+        response = await get_data_from_api(url, key)
+
         return {name: response}
 
 
-    @staticmethod
-    async def get_pokemon_by_habitat(habitat:str):
-        # Obtém dados dos pokemons de uma determinada localização
-        url = f'https://pokeapi.co/api/v2/pokemon-habitat/{habitat}'
-        response = await get_response(url)
-        return {habitat: response}
+    # @staticmethod
+    # async def get_habitat_data(habitat:str):
+    #     # Obtém dados dos pokemons de uma determinada localização
+    #     url = f'https://pokeapi.co/api/v2/pokemon-habitat/{habitat}'
+    #     response = await get_response(url)
+    #     return {habitat: response}
 
-    @staticmethod
-    async def get_pokemon_type_data(pokemon_type:str):
-        # Obtém informações sobre tipo
-        url = f'https://pokeapi.co/api/v2/type/{pokemon_type}'
-        response = read_pokemon_type(pokemon_type, url) 
-        return {pokemon_type: response} 
+    # @staticmethod
+    # async def get_pokemon_type_data(pokemon_type:str, key:str):
+    #     # Obtém informações sobre tipo
 
-    @staticmethod
-    async def get_pokemon_list_by_type(pokemon_type:str):
-        # Obtém lista de pokémons por tipo
-        url = f'https://pokeapi.co/api/v2/type/{pokemon_type}'
-        type_data = await get_response(url)
+    #     if cache.exists(key):
+    #         data = cache.get(key)
+    #         return {pokemon_type: data}
+    #     url = f'https://pokeapi.co/api/v2/type/{pokemon_type}'
+    #     response = await get_response(url)
 
-        response = []
-        for pokemon in type_data['pokemon']:
-            data = requests.get(pokemon['pokemon']['url'])
-            response.append({pokemon['pokemon']['name']: json.loads(data.text)})
+    #     return {pokemon_type: response} 
 
-        return response
+    # @staticmethod
+    # async def get_pokemon_list_by_type(pokemon_type:str):
+    #     # Obtém lista de pokémons por tipo
+    #     url = f'https://pokeapi.co/api/v2/type/{pokemon_type}'
+    #     type_data = await get_response(url)
 
-    @staticmethod
-    async def get_pokemon_encounter_areas(encounter_areas_url:str):
-        response = await get_response(encounter_areas_url)
+    #     response = []
+    #     for pokemon in type_data['pokemon']:
+    #         data = requests.get(pokemon['pokemon']['url'])
+    #         response.append({pokemon['pokemon']['name']: json.loads(data.text)})
 
-        return response
+    #     return response
+

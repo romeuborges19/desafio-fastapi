@@ -1,31 +1,32 @@
 from typing import Union
 from fastapi import APIRouter, Request
 from controller.utils import get_request_url
-from service.pokemon_service import *
-
-from repository.pokemon_cache import Cache
+from service.pokemon_service import PokemonService
 
 pokemon_router = APIRouter(
     prefix='/pokemon',
     tags=['pokemon']
 )
 
-cache = Cache()
-
-@pokemon_router.get('/')
+@pokemon_router.get('/{name}')
 async def get_pokemon_data(name:str, request: Request):
-    response_data = []
-    response_data = await get_pokemon_by_name(name)
-
-    return response_data
-
-@pokemon_router.get('/type')
-async def get_pokemon_data_by_type(name:str, request: Request):
-    url = get_request_url(request.url) 
-
-    if cache.exists(url):
-        response = cache.rd.get(url)
-        return response
-
-    response = await get_pokemon_type_data(name)
+    url = str(request.url)
+    response = await PokemonService.get_pokemon_by_name(name, url)
     return response
+
+@pokemon_router.get('/{name}/encounters')
+async def get_pokemon_encounter_data(name:str, request: Request):
+    url = str(request.url)
+    response = await PokemonService.get_pokemon_encounters(name, url)
+    return response
+
+# @pokemon_router.get('/type')
+# async def get_pokemon_type_data(name:str, request: Request):
+#     key = str(request.url)
+#     response = await PokemonService.get_pokemon_type_data(name, key)
+#     return response
+
+# @pokemon_router.get('/habitat')
+# async def get_habitat_data(name:str, request: Request):
+#     response = await PokemonService.get_habitat_data(name)
+#     return response
