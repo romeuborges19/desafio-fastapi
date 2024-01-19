@@ -1,4 +1,4 @@
-from api.utils import get_data_from_api
+from app.api.utils import get_data_from_api
 
 """
 TODO:

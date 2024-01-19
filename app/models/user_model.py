@@ -1,11 +1,11 @@
 import datetime
-from core.config import settings
-from pydantic import EmailStr, Field
-from redis_om import HashModel, get_redis_connection
+from app.core.config import settings
+from pydantic import EmailStr
+from redis_om import HashModel, get_redis_connection, Field
 
 class User(HashModel):
-    username: str 
-    email: str = Field(EmailStr)
+    username: str = Field(index=True)
+    email: str = Field(index=True)
     hash_password: str
     created_at: datetime.datetime
 

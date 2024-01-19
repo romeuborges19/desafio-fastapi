@@ -3,7 +3,7 @@ import json
 from fastapi import HTTPException, status
 import httpx
 
-from services.cache_service import cache
+from app.services.cache_service import cache
 
 async def get_response(url:str):
     # Função que obtém resposta da API

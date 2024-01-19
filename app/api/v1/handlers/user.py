@@ -1,7 +1,7 @@
 from pydantic.v1 import EmailStr
-from models.user_model import User
-from schemas.user_schema import UserAuthentication
-from services.user_service import UserService
+from app.models.user_model import User
+from app.schemas.user_schema import UserAuthentication
+from app.services.user_service import UserService
 from fastapi import APIRouter, Depends
 
 user_router = APIRouter(

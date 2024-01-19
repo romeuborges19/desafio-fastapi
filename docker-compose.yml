@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  redis-data:
+    image: redis/redis-stack-server:latest
+    command: redis-stack-server --port 6380
+    ports:
+      - "6380:6380"
+
+  redis-cache:
+    image: redis/redis-stack-server:latest
+    command: redis-stack-server --port 6379
+    ports:
+      - "6379:6379"
+  
+  app:
+    build: ./
+    command: bash -c "uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+    container_name: poke-api
+    volumes:
+      - .:/desafio-api
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis-data
+      - redis-cache
+    environment:
+      - REDIS_DATA_URL=redis://redis-data:6380
+      - REDIS_CACHE_URL=redis://redis-cache:6379

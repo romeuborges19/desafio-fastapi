@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Request
-from services.pokemon_service import PokemonService
+from app.services.pokemon_service import PokemonService
 
 pokemon_router = APIRouter(
     prefix='/pokemon',
