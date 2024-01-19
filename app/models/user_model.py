@@ -1,12 +1,12 @@
-from datetime import datetime
-from pydantic import BaseModel, EmailStr, Field
-from redis_om import JsonModel
+import datetime
+from pydantic import EmailStr, Field
+from redis_om import HashModel
 
-class User(JsonModel):
+class User(HashModel):
     username: str 
-    email: EmailStr
+    email: str = Field(EmailStr)
     hash_password: str
-    created_at: datetime = Field(default_factory=datetime.now)
+    created_at: datetime.datetime
 
     def __repr__(self) -> str:
         return f'<User {self.email}>'
@@ -21,3 +21,6 @@ class User(JsonModel):
         if isinstance(object, User):
             return self.email == object.email
         return False
+
+    class Config:
+        orm_mode = True
