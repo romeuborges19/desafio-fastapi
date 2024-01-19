@@ -12,9 +12,6 @@ user_router = APIRouter(
 
 @user_router.post('/create/')
 async def create_user(user_data: UserAuthentication):
-    # print(f'tipo do email: {type(user_data.email)}')
-    user_data.email = EmailStr(user_data.email)
-    print(user_data.email)
     user = await UserService.create_user(user_data) 
 
     return {'data': user}

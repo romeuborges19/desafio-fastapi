@@ -1,6 +1,7 @@
 import datetime
+from core.config import settings
 from pydantic import EmailStr, Field
-from redis_om import HashModel
+from redis_om import HashModel, get_redis_connection
 
 class User(HashModel):
     username: str 
@@ -21,6 +22,9 @@ class User(HashModel):
         if isinstance(object, User):
             return self.email == object.email
         return False
+
+    class Meta:
+        database = get_redis_connection(url=settings.REDIS_DATA_URL)
 
     class Config:
         orm_mode = True

@@ -1,5 +1,4 @@
 from api.utils import get_data_from_api
-from services.cache_service import CacheService
 
 """
 TODO:
@@ -12,8 +11,6 @@ TODO:
 6 - Pesquisar por tipo FEITO
 7 - Pesquisar por habilidades
 """
-
-cache = CacheService()
 
 class PokemonService:
     # Service class for Pokemon Data  

@@ -1,10 +1,13 @@
-import redis
 from redis_om import get_redis_connection
 
 class CacheService:
     # Service class for cache lookup
-    def __init__(self) -> None:
-        self.rd = get_redis_connection() 
+
+    def conn(self, url:str = 'redis//localhost:6379'):
+        self.rd = get_redis_connection(
+            url=url,
+            decode_responses=True
+        )
 
     def get(self, key):
         cache = self.rd.get(key)
@@ -16,3 +19,4 @@ class CacheService:
     def set(self, key, value):
         self.rd.set(key, value)
 
+cache = CacheService()
