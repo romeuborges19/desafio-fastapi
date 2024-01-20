@@ -1,15 +1,15 @@
-from app.api.utils import get_pokemon_data
+from app.services.utils import get_pokemon_data
 
 
 class PokemonService:
     # Classe de serviço que se comunica com a PokeAPI
 
     @staticmethod
-    async def get_pokemon_by_name(name:str, key:str):
+    async def get_pokemon_by_name(name:str, key:str, user_pk:str):
         # Obtém dados de um pokemon através do seu nome
         url = f'https://pokeapi.co/api/v2/pokemon/{name}'
 
-        response = await get_pokemon_data(url, key)
+        response = await get_pokemon_data(url, key, user_pk)
 
         return {name: response}
 

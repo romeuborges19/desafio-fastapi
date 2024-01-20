@@ -12,7 +12,7 @@ pokemon_router = APIRouter(
 @pokemon_router.get('/{name}', summary="Get pokémon data by name")
 async def get_pokemon_data(name:str, request: Request, current_user: User = Depends(get_current_user)):
     url = str(request.url)
-    response = await PokemonService.get_pokemon_by_name(name, url)
+    response = await PokemonService.get_pokemon_by_name(name, url, current_user.pk)
     return response
 
 @pokemon_router.get('/{name}/encounters', summary="Get pokémon encounter data by pokemon name")
