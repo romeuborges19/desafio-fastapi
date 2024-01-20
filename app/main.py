@@ -1,11 +1,11 @@
 from contextlib import asynccontextmanager
 
-from redis_om import Migrator, get_redis_connection
-from app.api.v1.router import router
 from fastapi import FastAPI
-from app.core.config import settings
+from redis_om import Migrator, get_redis_connection
 
-from app.models.user_model import User 
+from app.api.v1.router import router
+from app.core.config import settings
+from app.models.user_model import User
 from app.services.cache_service import cache
 
 
@@ -26,9 +26,7 @@ app = FastAPI(
     title=settings.PROJECT_NAME,
     openapi_url=f'{settings.API_V1_STR}/openapi.json',
     lifespan=lifespan)
+
 app.include_router(router, 
                    prefix=f'{settings.API_V1_STR}')
 
-@app.get('/')
-def read_root():
-    return {'Hello':'World'}

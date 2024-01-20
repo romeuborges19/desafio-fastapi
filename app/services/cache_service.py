@@ -1,9 +1,11 @@
 from redis_om import get_redis_connection
+from app.core.config import settings
+
 
 class CacheService:
-    # Service class for cache lookup
+    # Classe de serviço responsável por verificar cache 
 
-    def conn(self, url:str = 'redis//localhost:6379'):
+    def conn(self, url:str = settings.REDIS_CACHE_URL):
         self.rd = get_redis_connection(
             url=url,
             decode_responses=True

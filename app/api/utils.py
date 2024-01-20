@@ -22,7 +22,7 @@ def get_key(url):
     key = key.replace('http://127.0.0.1:8000', '')
     return key
 
-async def get_data_from_api(url:str, key:str):
+async def get_pokemon_data(url:str, key:str):
     # Função que obtém os dados da API. Caso a pesquisa 
     # já tenha sido realizada, ela retornará os dados salvos em cache
 

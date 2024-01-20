@@ -11,6 +11,7 @@ from app.schemas.user_schema import UserAuthentication
 
 
 class UserService:
+    # Classe de serviço responsável por se comunicar com o model User
     @staticmethod
     async def create_user(user_data: UserAuthentication):
         user = User(

@@ -1,5 +1,4 @@
 from datetime import datetime
-from os import stat
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
@@ -16,6 +15,8 @@ oauth_reusable = OAuth2PasswordBearer(
 )
 
 async def get_current_user(token: str = Depends(oauth_reusable)) -> User:
+    # Função assíncrona que obtém dados do usuário pelo token de acesso JWT
+
     try:
         payload = jwt.decode(
             token,
@@ -26,7 +27,6 @@ async def get_current_user(token: str = Depends(oauth_reusable)) -> User:
         token_data = TokenPayload(**payload)
         
         if datetime.fromtimestamp(token_data.exp) < datetime.now():
-            print(datetime.fromtimestamp(token_data.exp), datetime.now())
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail='Token has expired',

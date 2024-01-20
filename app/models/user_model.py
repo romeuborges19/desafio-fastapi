@@ -1,7 +1,8 @@
 import datetime
+
+from redis_om import Field, HashModel, get_redis_connection
+
 from app.core.config import settings
-from pydantic import EmailStr
-from redis_om import HashModel, get_redis_connection, Field
 
 class User(HashModel):
     username: str = Field(index=True)
