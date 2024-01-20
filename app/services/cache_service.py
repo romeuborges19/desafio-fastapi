@@ -4,9 +4,11 @@ from app.core.config import settings
 
 class CacheService:
     # Classe de serviço responsável por verificar cache 
+    def __init__(self):
+        self.rd = self.conn()
 
     def conn(self, url:str = settings.REDIS_CACHE_URL):
-        self.rd = get_redis_connection(
+        return get_redis_connection(
             url=url,
             decode_responses=True
         )

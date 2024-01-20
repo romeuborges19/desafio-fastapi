@@ -23,14 +23,18 @@ async def get_pokemon_data(url:str, key:str, user_pk: str):
     # Função que obtém os dados da API. Caso a pesquisa 
     # já tenha sido realizada, ela retornará os dados salvos em cache
 
+    print('testando')
     cache_key = f"{user_pk}:{key}"
     cache_data = cache.get(cache_key)
     if cache_data:
+        print('hit cache')
         return json.loads(cache_data)
 
+    print('no cache')
     response = await get_response(url)
+    print(f"response === {response.json()}")
 
-    if not response:
+    if not response.json():
         raise HTTPException(status_code=status.HTTP_204_NO_CONTENT,
                             detail="No content was returned")
 

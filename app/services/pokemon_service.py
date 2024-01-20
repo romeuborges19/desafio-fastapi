@@ -14,11 +14,11 @@ class PokemonService:
         return {name: response}
 
     @staticmethod
-    async def get_pokemon_encounters(name:str, key:str):
+    async def get_pokemon_encounters(name:str, key:str, user_pk:str):
         # Obtém dados sobre os locais onde é possível encontrar um pokémon
         url = f'https://pokeapi.co/api/v2/pokemon/{name}/encounters'
 
-        response = await get_pokemon_data(url, key)
+        response = await get_pokemon_data(url, key, user_pk)
 
         return {name: response}
 

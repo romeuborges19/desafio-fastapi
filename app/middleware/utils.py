@@ -16,10 +16,9 @@ class JWTTokenRequest:
     def get_bearer_token(request: Request):
         auth_token = request.headers.get('Authorization')
 
-        if auth_token:
-            if 'Bearer' in auth_token:
-                bearer_token: str = auth_token.split('Bearer')[1].strip()
-                return bearer_token
+        if 'Bearer' in auth_token:
+            bearer_token: str = auth_token.split('Bearer')[1].strip()
+            return bearer_token
         else:
             return None
 
@@ -42,8 +41,8 @@ class JWTTokenRequest:
             return None
 
 async def is_rate_limited(user_id: str, limit:int, period:int):
-    if client is None:
-        print('erro no redis')
+    if not client:
+        raise Exception("REDIS-RATELIMIT client was not initialized properly.")
 
     current_minute = datetime.now()
     current_minute = current_minute.strftime("%H:%M")
@@ -66,7 +65,6 @@ async def is_rate_limited(user_id: str, limit:int, period:int):
 
 
 async def rate_limiter(user_id: str):
-    print('in dhe tare timite')
     limit, period = settings.RATE_LIMIT_LIMIT, settings.RATE_LIMIT_PERIOD
     if await is_rate_limited(
         user_id=user_id,
