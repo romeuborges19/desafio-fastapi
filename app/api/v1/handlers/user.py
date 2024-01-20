@@ -1,6 +1,7 @@
+from fastapi import APIRouter
+
 from app.schemas.user_schema import UserAuthentication
 from app.services.user_service import UserService
-from fastapi import APIRouter
 
 
 user_router = APIRouter(

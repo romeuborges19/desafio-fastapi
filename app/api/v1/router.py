@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+
 from app.api.auth import jwt
 from app.api.v1.handlers import pokemon, user
 
