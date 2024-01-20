@@ -23,7 +23,7 @@ def get_key(url):
     # Função que obtém parte da url de pesquisa para gerar 
     # chave para armazenamento em cache
     key = str(url)
-    index = key.index('/pokemon')
+    index = key.index('/api')
     key = key[index:]
 
     return key

@@ -1,12 +1,39 @@
-### PokéAPI com FastAPI 
+## PokéAPI com FastAPI 
 
 Camada de API desenvolvida com FastAPI, com armazenamento de pesquisas em cache em uma instância do Redis, autenticação e permissão de usuários e controle de Rate Limit.
 
 ---
 
-#### Rodar o projeto
+### Detalhes do projeto
 
-##### 1. Através de uma imagem no docker (RECOMENDADO)
+Como requisitado, o projeto permite que sejam realizadas buscas sobre informações de Pokémons pela PokéAPI e os resultados dessas pesquisas são armazenados em cache para tornar pesquisas futuras mais rápidas. 
+
+As permissões nos endpoints foram configuradas de modo que apenas usuários autenticados podem realizar pesquisas. Também foi adicionado um middleware para o processo de Rate Limiting, limitando a 10 requisições por usuário, como sugerido.
+
+#### 1. FastAPI
+
+Foi utilizada em grande parte a arquitetura proposta em um outro projeto:
+
+https://github.com/igorbenav/FastAPI-boilerplate
+
+Todo o processo de autenticação de usuários foi realizado utilizando tokens JWT, devido à minha familiaridade com o processo.
+
+#### 2. Redis
+
+Foram utilizadas duas instâncias do Redis:
+ 
+- Uma para armazenamento de estruturas de dados, voltada para salvar as informações dos usuários
+- E outra para armazenamento de dados em cache.
+
+O processo de cache foi organizado na camada de serviços e é utilizado pelas funções do serviço responsável por consumir a PokéAPI.
+
+Durante o processo, percebi a necessidade de serem utilizados os recursos de busca do Redis Stack, o que me levou a organizar o projeto em uma imagem no Docker, para facilitar o desenvolvimento na minha máquina.
+
+---
+
+### Rodar o projeto
+
+#### 1. Através de uma imagem no docker (RECOMENDADO)
 
 O ambiente de desenvolvimento foi configurado em uma imagem no docker, que carrega as instâncias do Redis e o FastAPI. 
 
@@ -20,7 +47,7 @@ cd desafio-fastapi
 sudo docker-compose up --build
 ```
 
-##### 2. Manualmente
+#### 2. Manualmente
 
 Método mais dificultoso. Podem haver problemas.
 
@@ -56,27 +83,3 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-#### Detalhes do projeto
-
-Como requisitado, o projeto permite que sejam realizadas buscas sobre informações de Pokémons pela PokéAPI e os resultados dessas pesquisas são armazenados em cache para tornar pesquisas futuras mais rápidas. 
-
-As permissões nos endpoints foram configuradas de modo que apenas usuários autenticados podem realizar pesquisas. Também foi adicionado um middleware para o processo de Rate Limiting, limitando a 10 requisições por usuário, como sugerido.
-
-##### 1. FastAPI
-
-Foi utilizada em grande parte a arquitetura proposta em um outro projeto:
-
-https://github.com/igorbenav/FastAPI-boilerplate
-
-Todo o processo de autenticação de usuários foi realizado utilizando tokens JWT, devido à minha familiaridade com o processo.
-
-##### 2. Redis
-
-Foram utilizadas duas instâncias do Redis:
- 
-- Uma para armazenamento de estruturas de dados, voltada para salvar as informações dos usuários
-- E outra para armazenamento de dados em cache.
-
-O processo de cache foi organizado na camada de serviços e é utilizado pelas funções do serviço responsável por consumir a PokéAPI.
-
-Durante o processo, percebi a necessidade de serem utilizados os recursos de busca do Redis Stack, o que me levou a organizar o projeto em uma imagem no Docker, para facilitar o desenvolvimento na minha máquina.
