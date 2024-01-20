@@ -2,10 +2,8 @@ from fastapi import APIRouter, Body, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from jose import jwt
 
-from app.api.dependencies.user_deps import get_current_user
 from app.core.config import settings
 from app.core.security import create_access_token, create_refresh_token
-from app.models.user_model import User
 from app.schemas.auth_schema import TokenSchema
 from app.schemas.auth_schema import TokenPayload
 from app.services.user_service import UserService

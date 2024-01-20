@@ -4,15 +4,15 @@ from app.core.config import settings
 from app.main import app
 from app.tests.helper import get_test_token
 
-# client = TestClient(app)
 url = "/api/v1/pokemon/"
 
 test_email = settings.TEST_EMAIL
 test_password = settings.TEST_PASSWORD
 
 
-# Testa rota que obtém dados de pokémons
 class TestPokemonRoutes():
+    # Classe que testa as rotas relacionadas ao consumo da PokéAPI e 
+    # seus possíveis retornos
     @pytest.fixture 
     def client(self):
         return TestClient(app)
@@ -28,6 +28,7 @@ class TestPokemonRoutes():
         return token
 
     def test_read_pokemon(self, client, token):
+        # Testa se a API retorna dados para a pesquisa de um pokémon existente
         response = client.get(
             f"{url}charizard",
             headers={"Authorization": f"Bearer {token.json()['access_token']}"}
@@ -36,6 +37,7 @@ class TestPokemonRoutes():
         assert response.status_code == 200
 
     def test_read_pokemon_not_found(self, client, token):
+        # Testa se a API retorna dados para a pesquisa de um pokémon inexistente
         response = client.get(
             f"{url}johndoe",
             headers={"Authorization": f"Bearer {token.json()['access_token']}"}
@@ -44,6 +46,8 @@ class TestPokemonRoutes():
         assert response.status_code == 404
 
     def test_read_pokemon_encounter(self, client, token):
+        # Testa se a API retorna dados para a pesquisa sobre informações de encontro de um
+        # Pokémon existente
         response = client.get(
             f"{url}ditto/encounters",
             headers={"Authorization": f"Bearer {token.json()['access_token']}"}
@@ -51,7 +55,18 @@ class TestPokemonRoutes():
 
         assert response.status_code == 200
 
+    def test_read_pokemon_encounter_not_found(self, client, token):
+        # Testa se a API retorna dados para a pesquisa sobre informações de encontro de um
+        # Pokémon inexistente
+        response = client.get(
+            f"{url}johndoe/encounters",
+            headers={"Authorization": f"Bearer {token.json()['access_token']}"}
+        ) 
+
+        assert response.status_code == 404
+
     def test_read_pokemon_encounter_no_content(self, client, token):
+        # Testa se a API identifica a ausência de conteúdo de um retorno da PokéAPI
         response = client.get(
             f"{url}charizard/encounters",
             headers={"Authorization": f"Bearer {token.json()['access_token']}"}
