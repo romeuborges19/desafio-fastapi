@@ -1,10 +1,7 @@
 from fastapi import HTTPException, Request
-from jose import jwt
 from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoint
 
-from app.core.config import settings
-from app.middleware.utils import rate_limiter
-from app.schemas.auth_schema import TokenPayload
+from app.middleware.utils import JWTTokenRequest, rate_limiter
 
 
 class RateLimiterMiddleware(BaseHTTPMiddleware):
@@ -26,33 +23,3 @@ class RateLimiterMiddleware(BaseHTTPMiddleware):
 
         raise HTTPException(status_code=429,
                             detail="Rate limit exceeded")
-
-class JWTTokenRequest:
-    @staticmethod
-    def get_bearer_token(request: Request):
-        auth_token = request.headers.get('Authorization')
-
-        if auth_token:
-            if 'Bearer' in auth_token:
-                bearer_token: str = auth_token.split('Bearer')[1].strip()
-                return bearer_token
-        else:
-            return None
-
-    @staticmethod
-    def get_current_user_id(request: Request):
-        jwt_token = JWTTokenRequest.get_bearer_token(request)
-
-        if jwt_token:
-            payload = jwt.decode(
-                jwt_token,
-                settings.JWT_SECRET_KEY,
-                settings.ALGORITHM
-            )
-
-            token_data = TokenPayload(**payload)
-            user_id = token_data.sub
-
-            return user_id
-        else:
-            return None
