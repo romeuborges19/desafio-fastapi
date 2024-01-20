@@ -12,9 +12,12 @@ async def get_response(url:str):
 
         if response.status_code == 200:
             return response
-        else: 
+        elif response.status_code == 404: 
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                                detail="Pokemon not found.") 
+                                detail="Pokémon not found or does not exist") 
+        else:
+            raise HTTPException(status_code=response.status_code,
+                    detail="Error while fetching data from API") 
 
 def get_key(url):
     # Função que gera chave para armazenar pesquisas em cache

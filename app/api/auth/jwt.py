@@ -17,6 +17,7 @@ auth_router = APIRouter(
 
 @auth_router.post("/login", response_model=TokenSchema)
 async def login(data: OAuth2PasswordRequestForm = Depends()):
+    # Handler que processa o login e retorna os tokens gerados
     user = await UserService.authenticate_user(
         email=data.username,
         password=data.password
@@ -36,6 +37,7 @@ async def login(data: OAuth2PasswordRequestForm = Depends()):
 
 @auth_router.post('/refresh', response_model=TokenSchema)
 async def refresh_token(refresh_token: str = Body(...)):
+    # Handler que gera o refresh token para manter o usuário autenticado
     try:
         payload = jwt.decode(
             refresh_token,
@@ -64,8 +66,3 @@ async def refresh_token(refresh_token: str = Body(...)):
         'refresh_token': create_refresh_token(user.pk)
     }
     
-@auth_router.post('/test-token')
-async def test_access_token(user: User = Depends(get_current_user)):
-    return user
-
-
