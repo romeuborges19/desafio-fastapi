@@ -12,7 +12,12 @@ services:
     command: redis-stack-server --port 6379
     ports:
       - "6379:6379"
-  
+
+  redis-ratelimit:
+    image: redis/redis-stack-server:latest
+    command: redis-stack-server --port 6378
+    ports:
+      - "6378:6378"  
   app:
     build: ./
     command: bash -c "uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
@@ -24,6 +29,10 @@ services:
     depends_on:
       - redis-data
       - redis-cache
+      - redis-ratelimit
     environment:
       - REDIS_DATA_URL=redis://redis-data:6380
       - REDIS_CACHE_URL=redis://redis-cache:6379
+      - REDIS_RATELIMIT_URL=redis://redis-ratelimit:6378
+      - RATE_LIMIT_LIMIT=10
+      - RATE_LIMIT_PERIOD=60

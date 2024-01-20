@@ -19,20 +19,10 @@ async def get_response(url:str):
             raise HTTPException(status_code=response.status_code,
                     detail="Error while fetching data from API") 
 
-def get_key(url):
-    # Função que obtém parte da url de pesquisa para gerar 
-    # chave para armazenamento em cache
-    key = str(url)
-    index = key.index('/pokemon')
-    key = key[index:]
-
-    return key
-
 async def get_pokemon_data(url:str, key:str, user_pk: str):
     # Função que obtém os dados da API. Caso a pesquisa 
     # já tenha sido realizada, ela retornará os dados salvos em cache
 
-    key = get_key(key)
     cache_key = f"{user_pk}:{key}"
     cache_data = cache.get(cache_key)
     if cache_data:

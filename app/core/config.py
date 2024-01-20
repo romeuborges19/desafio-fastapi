@@ -13,7 +13,11 @@ class Settings(BaseSettings):
     BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = []
     PROJECT_NAME: str = "Pokémon FastAPI"
     REDIS_CACHE_URL: str = config('REDIS_CACHE_URL', cast=str)
+    REDIS_RATELIMIT_URL: str = config('REDIS_RATELIMIT_URL', cast=str)
     REDIS_DATA_URL: str = config('REDIS_DATA_URL', cast=str)
+    RATE_LIMIT_LIMIT: int = config('RATE_LIMIT_LIMIT', default=10)
+    RATE_LIMIT_PERIOD: int = config('RATE_LIMIT_PERIOD', default=60)
+
 
     class Config:
         case_sensitive = True
