@@ -11,9 +11,9 @@ class RateLimiterMiddleware(BaseHTTPMiddleware):
         super().__init__(app)
 
     async def dispatch(self, request: Request, call_next: RequestResponseEndpoint):
-        user_id = JWTTokenRequest.get_current_user_id(request)
-        print(f'middleware top. user id = {user_id}')
-        if user_id:
+        if request.headers.get('Authentication'):
+            # A verificação é realizada em endpoints que exigem autenticação
+            user_id = JWTTokenRequest.get_current_user_id(request)
             is_limited = await rate_limiter(user_id)
 
             if not is_limited:

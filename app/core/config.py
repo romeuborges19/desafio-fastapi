@@ -17,6 +17,9 @@ class Settings(BaseSettings):
     REDIS_DATA_URL: str = config('REDIS_DATA_URL', cast=str)
     RATE_LIMIT_LIMIT: int = config('RATE_LIMIT_LIMIT', default=10)
     RATE_LIMIT_PERIOD: int = config('RATE_LIMIT_PERIOD', default=60)
+    TEST_USERNAME:str = "romeu"
+    TEST_EMAIL:str = "romeuborges19@gmail.com"
+    TEST_PASSWORD:str = "romeuzao"
 
 
     class Config:

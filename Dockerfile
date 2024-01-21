@@ -6,6 +6,8 @@ COPY ./requirements.txt /desafio-fastapi/requirements.txt
 
 RUN pip install --no-cache-dir --upgrade -r /desafio-fastapi/requirements.txt
 
+RUN apt-get update && apt-get install -y redis-tools
+
 COPY ./app /desafio-api/app
 
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
