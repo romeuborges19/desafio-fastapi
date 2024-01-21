@@ -13,7 +13,7 @@ from app.core.config import settings
 def pytest_sessionstart(session):
     Migrator().run()
     user_auth = UserAuthentication(
-        username=f"errado_essa_bosta{settings.TEST_USERNAME}",
+        username=settings.TEST_USERNAME,
         email=settings.TEST_EMAIL,
         password=settings.TEST_PASSWORD
     )
