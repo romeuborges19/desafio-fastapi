@@ -11,6 +11,7 @@ user_router = APIRouter(
 
 @user_router.post('/create/')
 async def create_user(user_data: UserAuthentication):
-    user = await UserService.create_user(user_data) 
+    # Handler que processa pedido de criação de usuário
+    user = UserService.create_user(user_data) 
 
     return {'data': user}

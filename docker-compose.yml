@@ -3,9 +3,9 @@ version: '3'
 services:
   redis-data:
     image: redis/redis-stack-server:latest
-    command: redis-stack-server --port 6381
+    command: redis-stack-server --port 6382
     ports:
-      - "6381:6381"
+      - "6382:6382"
 
   redis-cache:
     image: redis/redis-stack-server:latest
@@ -33,7 +33,7 @@ services:
     environment:
       - JWT_REFRESH_SECRET_KEY=secretkey
       - JWT_SECRET_KEY=secretkey
-      - REDIS_DATA_URL=redis://redis-data:6381
+      - REDIS_DATA_URL=redis://redis-data:6382
       - REDIS_CACHE_URL=redis://redis-cache:6379
       - REDIS_RATELIMIT_URL=redis://redis-ratelimit:6378
       - RATE_LIMIT_LIMIT=10

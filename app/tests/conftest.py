@@ -18,10 +18,10 @@ def pytest_sessionstart(session):
         password=settings.TEST_PASSWORD
     )
 
-    UserService.create_user_not_async(user_auth)
+    UserService.create_user(user_auth)
 
 def pytest_sessionfinish(session):
-    user = UserService.get_user_by_email_not_async(settings.TEST_EMAIL)
+    user = UserService.get_user_by_email(settings.TEST_EMAIL)
 
     if user:
         cache.rd.delete(user.pk)

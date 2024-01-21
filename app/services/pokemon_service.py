@@ -53,7 +53,6 @@ class PokemonService:
     async def get_type_by_name(pokemon_type: str, key: str, user_pk: str):
         # Obtém dados sobre um determinado tipo de pokémon
         url = f'https://pokeapi.co/api/v2/type/{pokemon_type}/'
-        print(url)
 
         response = await fetch_api_data(url, key, user_pk)
 

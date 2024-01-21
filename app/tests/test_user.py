@@ -29,7 +29,7 @@ class TestUserRoutes():
             }
         )
 
-        user = UserService.get_user_by_email_not_async("johndoe@gmail.com")
+        user = UserService.get_user_by_email("johndoe@gmail.com")
         if user:
             User.Meta.database.delete(f":app.models.user_model.User:{user.pk}")
 
