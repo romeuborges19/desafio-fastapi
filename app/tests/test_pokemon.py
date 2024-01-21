@@ -74,3 +74,82 @@ class TestPokemonRoutes():
 
         assert response.status_code == 204
 
+    def test_read_habitat(self, client, token):
+        response = client.get(
+            f"{url}habitat/cave",
+            headers={"Authorization": f"Bearer {token.json()['access_token']}"}
+        )
+
+        assert response.status_code == 200
+
+    def test_read_habitat_not_found(self, client, token):
+        response = client.get(
+            f"{url}habitat/123",
+            headers={"Authorization": f"Bearer {token.json()['access_token']}"}
+        )
+
+        assert response.status_code == 404
+
+    def test_read_color(self, client, token):
+        response = client.get(
+            f"{url}color/black",
+            headers={"Authorization": f"Bearer {token.json()['access_token']}"}
+        )
+
+        assert response.status_code == 200
+
+    def test_read_color_not_found(self, client, token):
+        response = client.get(
+            f"{url}color/123",
+            headers={"Authorization": f"Bearer {token.json()['access_token']}"}
+        )
+
+        assert response.status_code == 404
+
+    def test_read_ability(self, client, token):
+        response = client.get(
+            f"{url}ability/stench",
+            headers={"Authorization": f"Bearer {token.json()['access_token']}"}
+        )
+
+        assert response.status_code == 200
+
+    def test_read_ability_not_found(self, client, token):
+        response = client.get(
+            f"{url}ability/notfound",
+            headers={"Authorization": f"Bearer {token.json()['access_token']}"}
+        )
+
+        assert response.status_code == 404
+
+    def test_read_type(self, client, token):
+        response = client.get(
+            f"{url}type/ice",
+            headers={"Authorization": f"Bearer {token.json()['access_token']}"}
+        )
+
+        assert response.status_code == 200
+
+    def test_read_type_not_found(self, client, token):
+        response = client.get(
+            f"{url}type/notfound",
+            headers={"Authorization": f"Bearer {token.json()['access_token']}"}
+        )
+
+        assert response.status_code == 404
+
+    def test_read_species(self, client, token):
+        response = client.get(
+            f"{url}species/wormadam",
+            headers={"Authorization": f"Bearer {token.json()['access_token']}"}
+        )
+
+        assert response.status_code == 200
+
+    def test_read_species_not_found(self, client, token):
+        response = client.get(
+            f"{url}species/nottfound",
+            headers={"Authorization": f"Bearer {token.json()['access_token']}"}
+        )
+
+        assert response.status_code == 404
