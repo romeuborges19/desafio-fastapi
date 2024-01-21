@@ -1,9 +1,8 @@
 from datetime import datetime
-from sys import exc_info
 from typing import Optional
 from fastapi import HTTPException, status
 
-from redis_om import Migrator, NotFoundError
+from redis_om import NotFoundError
 
 from app.core.security import get_password, verify_password
 from app.models.user_model import User
