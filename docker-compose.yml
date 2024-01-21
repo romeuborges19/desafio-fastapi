@@ -3,9 +3,9 @@ version: '3'
 services:
   redis-data:
     image: redis/redis-stack-server:latest
-    command: redis-stack-server --port 6380
+    command: redis-stack-server --port 6381
     ports:
-      - "6380:6380"
+      - "6381:6381"
 
   redis-cache:
     image: redis/redis-stack-server:latest
@@ -31,8 +31,13 @@ services:
       - redis-cache
       - redis-ratelimit
     environment:
-      - REDIS_DATA_URL=redis://redis-data:6380
+      - JWT_REFRESH_SECRET_KEY=secretkey
+      - JWT_SECRET_KEY=secretkey
+      - REDIS_DATA_URL=redis://redis-data:6381
       - REDIS_CACHE_URL=redis://redis-cache:6379
       - REDIS_RATELIMIT_URL=redis://redis-ratelimit:6378
       - RATE_LIMIT_LIMIT=10
       - RATE_LIMIT_PERIOD=60
+      - TEST_USERNAME=test_username
+      - TEST_EMAIL=test.mail@gmail.com
+      - TEST_PASSWORD=test123

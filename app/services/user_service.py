@@ -13,6 +13,20 @@ class UserService:
     # Classe de serviço responsável por se comunicar com o model User
     @staticmethod
     async def create_user(user_data: UserAuthentication):
+        print('criando usuario')
+        user = User(
+            username=user_data.username,
+            email=user_data.email,
+            hash_password=get_password(user_data.password),
+            created_at=datetime.now(),
+        ) 
+
+        user.save()
+        return user
+
+    @staticmethod
+    def create_user_not_async(user_data: UserAuthentication):
+        print('criando usuario sem ser async')
         user = User(
             username=user_data.username,
             email=user_data.email,
@@ -25,6 +39,23 @@ class UserService:
 
     @staticmethod
     async def get_user_by_email(email: str) -> Optional[User]:
+        user = User.find(User.email == email)       
+
+        if user.count():
+            try:
+                user = User.get(user.first().pk)
+            except NotFoundError:
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail="User not found"
+                )
+        else:
+            user = None
+
+        return user
+
+    @staticmethod
+    def get_user_by_email_not_async(email: str) -> Optional[User]:
         user = User.find(User.email == email)       
 
         if user.count():

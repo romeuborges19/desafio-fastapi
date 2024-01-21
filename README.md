@@ -8,7 +8,9 @@ Camada de API desenvolvida com FastAPI, com armazenamento de pesquisas em cache 
 
 Como requisitado, o projeto permite que sejam realizadas buscas sobre informações de Pokémons pela PokéAPI e os resultados dessas pesquisas são armazenados em cache para tornar pesquisas futuras mais rápidas. 
 
-As permissões nos endpoints foram configuradas de modo que apenas usuários autenticados podem realizar pesquisas. Também foi adicionado um middleware para o processo de Rate Limiting, limitando a 10 requisições por usuário, como sugerido.
+As permissões nos endpoints foram configuradas de modo que apenas usuários autenticados podem realizar pesquisas. Também foi adicionado um middleware para o processo de Rate Limiting, limitando a 10 requisições por usuário por minuto, como sugerido.
+
+Por fim, foram implementados testes para todas as rotas e seus possíveis retornos, para garantir a integridade do projeto.
 
 #### 1. FastAPI
 
@@ -49,9 +51,9 @@ cd desafio-fastapi
 sudo docker-compose up --build
 ```
 
-É possível rodar os testes através do comando:
+Para testar o programa, é importante que eles sejam rodados a partir da pasta `tests`, como no comando abaixo.
 ```
-sudo docker exec poke-api pytest
+sudo docker exec poke-api pytest app/tests
 ```
 
 #### 2. Manualmente

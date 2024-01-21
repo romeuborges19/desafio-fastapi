@@ -13,7 +13,7 @@ test_password = settings.TEST_PASSWORD
 
 class TestAuthRoutes:
     # Classe que testa rotas relacionadas aos processos de autenticação
-    @pytest.fixture
+    @pytest.fixture()
     def client(self):
         return TestClient(app)
 

@@ -13,7 +13,7 @@ test_password = settings.TEST_PASSWORD
 class TestPokemonRoutes():
     # Classe que testa as rotas relacionadas ao consumo da PokéAPI e 
     # seus possíveis retornos
-    @pytest.fixture 
+    @pytest.fixture()
     def client(self):
         return TestClient(app)
 

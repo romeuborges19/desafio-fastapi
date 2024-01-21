@@ -23,4 +23,11 @@ class CacheService:
     def set(self, key, value):
         self.rd.set(key, value)
 
+    def add_to_user(self, key, value):
+        self.rd.sadd(key, value)
+
+    def get_from_user(self, user_pk, key):
+        results = self.rd.sscan(name=user_pk, match=f"*{key}*")
+        return results
+
 cache = CacheService()

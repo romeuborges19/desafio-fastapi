@@ -4,8 +4,9 @@ from redis_om import Field, HashModel, get_redis_connection
 
 from app.core.config import settings
 
+# ORM de usuário no banco de dados
 class User(HashModel):
-    username: str = Field(index=True)
+    username: str 
     email: str = Field(index=True)
     hash_password: str
     created_at: datetime.datetime
@@ -26,6 +27,3 @@ class User(HashModel):
 
     class Meta:
         database = get_redis_connection(url=settings.REDIS_DATA_URL)
-
-    class Config:
-        orm_mode = True
