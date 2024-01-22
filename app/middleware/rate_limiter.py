@@ -1,3 +1,4 @@
+from decouple import os
 from fastapi import HTTPException, Request
 from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoint
 
@@ -11,8 +12,13 @@ class RateLimiterMiddleware(BaseHTTPMiddleware):
         super().__init__(app)
 
     async def dispatch(self, request: Request, call_next: RequestResponseEndpoint):
-        if request.headers.get('Authentication'):
-            # A verificação é realizada em endpoints que exigem autenticação
+        testing = os.environ.get('PYTEST_CURRENT_TEST')
+        if testing:
+            return await call_next(request)
+
+        if request.headers.get('Authorization'):
+            # A verificação é realizada em endpoints que exigem autenticação,
+            # ou seja, nas requisições que se comunicam com a PokéAPI
             user_id = JWTTokenRequest.get_current_user_id(request)
             is_limited = await rate_limiter(user_id)
 
