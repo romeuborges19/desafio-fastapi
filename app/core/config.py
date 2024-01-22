@@ -7,16 +7,16 @@ class Settings(BaseSettings):
     API_V1_STR: str = '/api/v1'
 
     # JWT settings
-    JWT_REFRESH_SECRET_KEY: str = config('JWT_REFRESH_SECRET_KEY', cast=str)
-    JWT_SECRET_KEY: str = config('JWT_SECRET_KEY', cast=str)
+    JWT_REFRESH_SECRET_KEY: str = config('JWT_REFRESH_SECRET_KEY', default="secretkey", cast=str)
+    JWT_SECRET_KEY: str = config('JWT_SECRET_KEY', default="secretkey", cast=str)
     ALGORITHM: str = "HS256"
     ACESS_TOKEN_EXPIRE_MINUTES: int = 60
     REFRESH_TOKEN_EXPIRE_MINUTES: int = 60*24*7
 
     # Redis connection settings
-    REDIS_CACHE_URL: str = config('REDIS_CACHE_URL', cast=str)
-    REDIS_RATELIMIT_URL: str = config('REDIS_RATELIMIT_URL', cast=str)
-    REDIS_DATA_URL: str = config('REDIS_DATA_URL', cast=str)
+    REDIS_CACHE_URL: str = config('REDIS_CACHE_URL', default="redis://localhost:6380"cast=str)
+    REDIS_RATELIMIT_URL: str = config('REDIS_RATELIMIT_URL', default="redis://localhost:6379", cast=str)
+    REDIS_DATA_URL: str = config('REDIS_DATA_URL', default="redis://localhost:6378", cast=str)
 
     # Rate limiting settings
     RATE_LIMIT_LIMIT: int = config('RATE_LIMIT_LIMIT', default=10)
