@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     REFRESH_TOKEN_EXPIRE_MINUTES: int = 60*24*7
 
     # Redis connection settings
-    REDIS_CACHE_URL: str = config('REDIS_CACHE_URL', default="redis://localhost:6380"cast=str)
+    REDIS_CACHE_URL: str = config('REDIS_CACHE_URL', default="redis://localhost:6380", cast=str)
     REDIS_RATELIMIT_URL: str = config('REDIS_RATELIMIT_URL', default="redis://localhost:6379", cast=str)
     REDIS_DATA_URL: str = config('REDIS_DATA_URL', default="redis://localhost:6378", cast=str)
 
